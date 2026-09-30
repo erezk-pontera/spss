@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en" data-theme="light"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -5,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Secure Password Split</title>
     
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiU2VjdXJlIFBhc3N3b3JkIFNwbGl0Iiwic2hvcnRfbmFtZSI6IlNlY3VyZSBTcGxpdCIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5IjoiYnJvd3NlciIsImJhY2tncm91bmRfY29sb3IiOiIjMTIxMjEyIiwidGhlbWVfY29sb3IiOiIjMTIxMjEyIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsdkbjJkemRHVndiM0prT1d4b1JHVmtaV1Z5WlhOamIzWnRaVzUwUFNKMWMyVnljMmwwZDI5eWJHOTJaVzUwUFNKemRXZHpJSEpwWjJodlkyRnNaVzUwUFNKMGVYQmxJamdpYVdRaU9qQXdJREF3TVRZMU1UVWlJSGc5SW1WM1pYSnZkbWwwWlNJNklrTnZibTFsYm5RdmMzWm5Jamc1TDJkMWQybGxMV0ZzYkc5M2FXNW5MV0Z5Y21GMExtRnNiQzV6ZG1kZlptOXliV0YwSWo0aWMzZHNkR1ZfY21sa0lqcHdaVzUwWVhScGIyNGdhV1F5TVRJeE1qSUlMQ0p6ZFc1MElqcHdZVzVuSWpvd2ZTSmpiM0poZEdWM2NrbGtQU0p6ZFc1MElqcHdZVzVuSWpvd2ZTSmpiM0poZEdWM2NrbGtQU0p6ZFc1MElqcHdZVzVuSWpvd2ZTSXZPZz09Iiwic2l6ZXMiOiIxOTJ4MTkyIiwidHlwZSI6ImltYWdlL3N2Zyt4bWwifV19">
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiU2VjdXJlIFBhc3N3b3JkIFNwbGl0Iiwic2hvcnRfbmFtZSI6IlNlY3VyZSBTcGxpdCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMxMjEyMTIiLCJ0aGVtZV9jb2xvciI6IiMxMjEyMTIiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhacFpYZENiM2c5SWpBZ01DQTFNVElnTlRFeUlqNDhjbVZqZENCM2FXUjBhRDBpTlRFeUlpQm9aV2xuYUhROUlqVXhNaUlnY25nOUlqazJJaUJtYVd4c1BTSWpNVEl4TWpFeUlpOCtQSEpsWTNRZ2VEMGlNVE0ySWlCNVBTSXlNeklpSUhkcFpIUm9QU0l5TkRBaUlHaGxhV2RvZEQwaU1UZzBJaUJ5ZUQwaU1qUWlJR1pwYkd3OUlpTXpZamd5WmpZaUx6NDhjR0YwYUNCa1BTSk5NVGMySURJek1uWXROVFpoT0RBZ09EQWdNQ0F3SURFZ01UWXdJREIyTlRZaUlHWnBiR3c5SW01dmJtVWlJSE4wY205clpUMGlJek5pT0RKbU5pSWdjM1J5YjJ0bExYZHBaSFJvUFNJME1DSXZQanhqYVhKamJHVWdZM2c5SWpJMU5pSWdZM2s5SWpNeE1DSWdjajBpTWpZaUlHWnBiR3c5SWlNeE1qRXlNVElpTHo0OGNtVmpkQ0I0UFNJeU5EUWlJSGs5SWpNeE9DSWdkMmxrZEdnOUlqSTBJaUJvWldsbmFIUTlJalUySWlCeWVEMGlPQ0lnWm1sc2JEMGlJekV5TVRJeE1pSXZQand2YzNablBnPT0iLCJzaXplcyI6ImFueSIsInR5cGUiOiJpbWFnZS9zdmcreG1sIiwicHVycG9zZSI6ImFueSJ9XX0=">
 
     <style>
         :root {
@@ -251,14 +252,6 @@
         
         input[type=range] { width: 100%; accent-color: var(--accent); margin: 0.5rem 0; }
 
-        /* TOGGLE SWITCH */
-        .toggle-switch { display: flex; align-items: center; justify-content: space-between; cursor: pointer; margin-bottom: 1rem; background: var(--bg-color); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border-color); }
-        .toggle-switch input { display: none; }
-        .toggle-track { width: 40px; height: 20px; background: var(--surface-highlight); border-radius: 20px; position: relative; transition: 0.3s; border: 1px solid var(--border-color); }
-        .toggle-thumb { width: 16px; height: 16px; background: var(--text-muted); border-radius: 50%; position: absolute; top: 1px; left: 2px; transition: 0.3s; }
-        input:checked + .toggle-track { background: var(--accent); border-color: var(--accent); }
-        input:checked + .toggle-track .toggle-thumb { transform: translateX(20px); background: white; }
-
         /* MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -342,56 +335,13 @@
 </header>
 
 <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('split')">Split</button>
-    <button class="tab-btn" onclick="switchTab('threshold')">Threshold Split</button>
-    <button class="tab-btn" onclick="switchTab('reconstruct')">Reconstruct</button>
+    <button class="tab-btn active" data-tab="threshold" onclick="switchTab('threshold')">Threshold Split</button>
+    <button class="tab-btn" data-tab="reconstruct" onclick="switchTab('reconstruct')">Reconstruct</button>
 </div>
 
 <main>
-    <!-- TAB 1: N-out-of-N SPLIT -->
-    <div id="split" class="tab-content active">
-        <div class="control-group">
-            <div class="label-row">
-                <span class="label">SECRET TO SPLIT</span>
-                <span id="info-secret-1"><div class="info-wrapper"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="var(--text-muted)"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zm0 12a5.5 5.5 0 110-11 5.5 5.5 0 010 11z"></path><path d="M8.572 6.253H6.607v1h.965v3.812H6.397v1h3.35v-1H8.572V6.253zM8.49 4.032H7.235v1.255H8.49V4.032z"></path></svg><div class="info-tooltip"><span style="color:var(--digit-color)">123</span> = Digits (Red)<br><span style="color:var(--symbol-color)">#$&amp;</span> = Symbols (Green)</div></div></span>
-            </div>
-            
-            <div class="secure-input-wrapper">
-                <div class="secure-display-overlay" id="overlay_s1"></div>
-                <input type="password" id="secret_1" placeholder="Enter Secret or Generate" autocomplete="off" data-lpignore="true" data-1p-ignore="" name="sps_s_1" spellcheck="false">
-                <button class="btn-icon" onmousedown="reveal('secret_1', 'overlay_s1')" onmouseup="hide('secret_1', 'overlay_s1')" ontouchstart="reveal('secret_1', 'overlay_s1')" ontouchend="hide('secret_1', 'overlay_s1')" title="Hold to Reveal">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                </button>
-            </div>
-            
-            <div class="icon-btn-row">
-                <button class="btn-gear" onclick="openModal()" title="Generator Settings">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                </button>
-                
-                <button class="btn-gen-img" onclick="generateSecret('secret_1')" title="Generate New Secret">
-                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTIwMHB0IiBoZWlnaHQ9IjEyMDBwdCIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTIwMCAxMjAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMzYjgyZjYiPgogPHBhdGggZD0ibTEwNzQuNiA0ODkuNzJoLTI3Ny4wOHYtMTAzLjhjMC4xMjEwOS0xMS4xNiAzLjk2MDktMTA3LjQgMTA3LjE2LTEwNy40IDEwMy4yIDAgMTA3LjA0IDk2LjIzOCAxMDcuMTYgMTA3LjI4djM0LjgwMWg1My41MnYtMzQuODAxYzAtNTUuNjgtMzMuNjAyLTE2MC44LTE2MC42OC0xNjAuOC0xMjcuMDggMC0xNjAuNjggMTA1LjEyLTE2MC42OCAxNjAuOHYxMDMuOTJoLTIuMTYwMmMtMzYuMTIxIDAtNjUuMzk4IDMwLjEyMS02NS4zOTggNjcuMTk5djguNTE5NWgtNDg3LjY4Yy02NC41NTkgMC0xMTcuMjQgNTIuNTU5LTExNy4yNCAxMTcuMTIgMCA2NC44MDEgNTIuNjggMTE3LjI0IDExNy4yNCAxMTcuMjRoNDg3LjY4djEwLjgwMWMwIDM3LjA3OCAyOS4yODEgNjcuMTk5IDY1LjM5OCA2Ny4xOTloMzMyLjc2YzM2LjEyMSAwIDY1LjM5OC0zMC4xMjEgNjUuMzk4LTY3LjE5OXYtMjUzLjY4YzAtMzcuMDgyLTI5LjI4MS02Ny4yMDMtNjUuMzk4LTY3LjIwM3ptLTQwMi44NCAyNzEuMDhoLTQ4M2MtNDMuMDc4IDAtNzguMTIxLTM1LjAzOS03OC4xMjEtNzguMjM4IDAtNDIuOTYxIDM1LjAzOS03OC4xMjEgNzguMTIxLTc4LjEyMWg0ODN6bTI3NC42OCAwaC05MC4yMzhsMjMuMzk4LTcxLjg3OWMtMTQuMDM5LTcuNjc5Ny0yMy4zOTgtMjIuNTU5LTIzLjM5OC0zOS42MDIgMC0yNC44NCAyMC4xNi00NSA0NS4xMjEtNDUgMjQuODQgMCA0NS4xMjEgMjAuMTYgNDUuMTIxIDQ1IDAgMTcuMDM5LTkuNDgwNSAzMS45MjItMjMuMzk4IDM5LjYwMnoiLz4KIDxwYXRoIGQ9Im0yNDcuMzIgNjgyLjQ4IDQzLjgwMSAzMy44MjgtMTQuMDQzIDE4LjIzOC0zNi45NTctMjguNTQ3djM3LjE5OWgtMjMuMTZ2LTM3LjE5OWwtMzYuODQgMjguNTQ3LTE0LjE2LTE4LjIzOCA0My44MDEtMzMuODI4LTQzLjgwMS0zMy44NCAxNC4wMzktMTguMjQyIDM2Ljk2MSAyOC41NjJ2LTM3LjE5OWgyMy4xNnYzNy4xOTlsMzYuOTU3LTI4LjU2MiAxNC4wNDMgMTguMjQyeiIvPgogPHBhdGggZD0ibTQyNC4zMiA2ODIuNDggNDMuODAxIDMzLjgyOC0xNC4wNDMgMTguMjM4LTM2Ljk1Ny0yOC41NDd2MzcuMTk5aC0yMy4xNnYtMzcuMTk5bC0zNi44NCAyOC41NDctMTQuMTYtMTguMjM4IDQzLjgwMS0zMy44MjgtNDMuODAxLTMzLjg0IDE0LjAzOS0xOC4yNDIgMzYuOTYxIDI4LjU2MnYtMzcuMTk5aDIzLjE2djM3LjE5OWwzNi45NTctMjguNTYyIDE0LjA0MyAxOC4yNDJ6Ii8+CiA8cGF0aCBkPSJtNjAxLjMyIDY4Mi40OCA0My44MDEgMzMuODI4LTE0LjA0MyAxOC4yMzgtMzYuOTU3LTI4LjU0N3YzNy4xOTloLTIzLjE2di0zNy4xOTlsLTM2Ljg0IDI4LjU0Ny0xNC4xNi0xOC4yMzggNDMuODAxLTMzLjgyOC00My44MDEtMzMuODQgMTQuMDM5LTE4LjI0MiAzNi45NjEgMjguNTYydi0zNy4xOTloMjMuMTZ2MzcuMTk5bDM2Ljk1Ny0yOC41NjIgMTQuMDQzIDE4LjI0MnoiLz4KPC9zdmc+" alt="Generate">
-                </button>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span class="label">SHARES (N)</span>
-                <input type="number" id="nNum1" class="num-input" value="2" min="2" max="255" oninput="syncSlider('nNum1', 'nRange1')">
-            </div>
-            <input type="range" id="nRange1" min="2" max="10" value="2" oninput="syncInput('nRange1', 'nNum1')">
-            <button class="btn btn-primary" style="margin-top: 1rem;" onclick="performSplitXOR()">SPLIT</button>
-        </div>
-
-        <div id="sharesOutput1" class="shares-list"></div>
-    </div>
-
-    <!-- TAB 2: THRESHOLD SPLIT (Shamir) -->
-    <div id="threshold" class="tab-content">
+    <!-- TAB 1: THRESHOLD SPLIT (Shamir) -->
+    <div id="threshold" class="tab-content active">
         <div class="control-group">
             <div class="label-row">
                 <span class="label">SECRET TO SPLIT</span>
@@ -399,8 +349,8 @@
             </div>
             <div class="secure-input-wrapper">
                 <div class="secure-display-overlay" id="overlay_s2"></div>
-                <input type="password" id="secret_2" placeholder="Enter Secret or Generate" autocomplete="off" data-lpignore="true" name="sps_s_2">
-                <button class="btn-icon" onmousedown="reveal('secret_2', 'overlay_s2')" onmouseup="hide('secret_2', 'overlay_s2')" ontouchstart="reveal('secret_2', 'overlay_s2')" ontouchend="hide('secret_2', 'overlay_s2')">
+                <input type="password" id="secret_2" placeholder="Enter Secret or Generate" autocomplete="off" data-lpignore="true" data-1p-ignore="" name="sps_s_2" spellcheck="false">
+                <button class="btn-icon" onmousedown="reveal('secret_2', 'overlay_s2')" onmouseup="hide('secret_2', 'overlay_s2')" onmouseleave="hide('secret_2', 'overlay_s2')" ontouchstart="reveal('secret_2', 'overlay_s2')" ontouchend="hide('secret_2', 'overlay_s2')" ontouchcancel="hide('secret_2', 'overlay_s2')" title="Hold to Reveal">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </button>
             </div>
@@ -435,7 +385,7 @@
         <div id="sharesOutput2" class="shares-list"></div>
     </div>
 
-    <!-- TAB 3: RECONSTRUCT -->
+    <!-- TAB 2: RECONSTRUCT -->
     <div id="reconstruct" class="tab-content">
         <div class="control-group">
             <div class="label-row">
@@ -443,31 +393,7 @@
                 <span id="info-recon-header"><div class="info-wrapper"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="var(--text-muted)"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zm0 12a5.5 5.5 0 110-11 5.5 5.5 0 010 11z"></path><path d="M8.572 6.253H6.607v1h.965v3.812H6.397v1h3.35v-1H8.572V6.253zM8.49 4.032H7.235v1.255H8.49V4.032z"></path></svg><div class="info-tooltip"><span style="color:var(--digit-color)">123</span> = Digits (Red)<br><span style="color:var(--symbol-color)">#$&amp;</span> = Symbols (Green)</div></div></span>
             </div>
             
-            <label class="toggle-switch">
-                <span style="font-size:0.85rem; font-weight:600; color:var(--text-main);">Use Threshold Mode</span>
-                <input type="checkbox" id="useThreshold">
-                <div class="toggle-track">
-                    <div class="toggle-thumb"></div>
-                </div>
-            </label>
-
-            <div id="reconInputs" class="shares-list" style="margin-top: 0.5rem;"><div class="share-item">
-            <div class="secure-input-wrapper">
-                <div class="secure-display-overlay" id="ov_rc_5dtiacl6j"></div>
-                <input type="password" class="recon-input" id="rc_5dtiacl6j" placeholder="Paste Share Code" autocomplete="off" data-lpignore="true" style="font-family:monospace;letter-spacing:1px" oninput="this.value=this.value.replace(/[^0-9A-Fa-f]/g,'').toUpperCase()">
-                <button class="btn-icon" onmousedown="reveal('rc_5dtiacl6j','ov_rc_5dtiacl6j')" onmouseup="hide('rc_5dtiacl6j','ov_rc_5dtiacl6j')" ontouchstart="reveal('rc_5dtiacl6j','ov_rc_5dtiacl6j')" ontouchend="hide('rc_5dtiacl6j','ov_rc_5dtiacl6j')">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                </button>
-                <button class="btn-delete" onclick="this.closest('.share-item').remove();updateDeleteButtons()" disabled=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-            </div></div><div class="share-item">
-            <div class="secure-input-wrapper">
-                <div class="secure-display-overlay" id="ov_rc_8lqna1rg5"></div>
-                <input type="password" class="recon-input" id="rc_8lqna1rg5" placeholder="Paste Share Code" autocomplete="off" data-lpignore="true" style="font-family:monospace;letter-spacing:1px" oninput="this.value=this.value.replace(/[^0-9A-Fa-f]/g,'').toUpperCase()">
-                <button class="btn-icon" onmousedown="reveal('rc_8lqna1rg5','ov_rc_8lqna1rg5')" onmouseup="hide('rc_8lqna1rg5','ov_rc_8lqna1rg5')" ontouchstart="reveal('rc_8lqna1rg5','ov_rc_8lqna1rg5')" ontouchend="hide('rc_8lqna1rg5','ov_rc_8lqna1rg5')">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                </button>
-                <button class="btn-delete" onclick="this.closest('.share-item').remove();updateDeleteButtons()" disabled=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-            </div></div></div>
+            <div id="reconInputs" class="shares-list" style="margin-top: 0.5rem;"></div>
             <button class="btn btn-add-share" onclick="addReconRow()" title="Add Share Row">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span style="margin-left:8px;">Add Share Row</span>
@@ -484,7 +410,7 @@
             <div class="secure-input-wrapper">
                 <div class="secure-display-overlay" id="reconOverlay"></div>
                 <input type="password" id="reconResult" readonly="" autocomplete="off" data-lpignore="true" name="sps_r_1">
-                <button class="btn-icon" onmousedown="reveal('reconResult', 'reconOverlay')" onmouseup="hide('reconResult', 'reconOverlay')" ontouchstart="reveal('reconResult', 'reconOverlay')" ontouchend="hide('reconResult', 'reconOverlay')">
+                <button class="btn-icon" onmousedown="reveal('reconResult', 'reconOverlay')" onmouseup="hide('reconResult', 'reconOverlay')" onmouseleave="hide('reconResult', 'reconOverlay')" ontouchstart="reveal('reconResult', 'reconOverlay')" ontouchend="hide('reconResult', 'reconOverlay')" ontouchcancel="hide('reconResult', 'reconOverlay')" title="Hold to Reveal">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </button>
                 <button class="btn-icon" onclick="copyToClipboard(document.getElementById('reconResult').value)">
@@ -564,10 +490,14 @@
     /* STATE */
     let genOptions = { sym: 'req', upper: 'req', lower: 'req', num: 'req' };
     let deferredPrompt;
+    let pristineHTML = '';
 
     /* INIT */
     document.addEventListener('DOMContentLoaded', () => {
-        ['info-secret-1', 'info-secret-2', 'info-recon-header', 'info-result'].forEach(id => {
+        // Snapshot the source before any DOM mutation, so the download never contains shares/state
+        pristineHTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+        ['info-secret-2', 'info-recon-header', 'info-result'].forEach(id => {
             if(document.getElementById(id)) document.getElementById(id).innerHTML = INFO_HTML;
         });
         detectTheme();
@@ -579,26 +509,15 @@
         // Recursive Download Logic
         document.getElementById('downloadLink').addEventListener('click', function(e) {
             e.preventDefault();
-            const html = document.documentElement.outerHTML;
-            const base64Content = btoa(unescape(encodeURIComponent(html)));
+            const url = URL.createObjectURL(new Blob([pristineHTML], {type: 'text/html'}));
             const a = document.createElement('a');
-            a.href = 'data:text/html;base64,' + base64Content;
+            a.href = url;
             a.download = 'SPSS.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
         });
-
-        // Register Service Worker (Blob based for single-file PWA support if hosted)
-        if ('serviceWorker' in navigator) {
-            // Simple fetch handler to satisfy PWA requirements
-            const swCode = `self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>e.respondWith(fetch(e.request).catch(()=>new Response("Offline"))));`;
-            const blob = new Blob([swCode], {type: 'application/javascript'});
-            const swUrl = URL.createObjectURL(blob);
-            navigator.serviceWorker.register(swUrl)
-                .then(reg => console.log('SW registered', reg))
-                .catch(err => console.log('SW failed (likely local file)', err));
-        }
     });
 
     // PWA Install Prompt Handler
@@ -635,10 +554,7 @@
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
-        const btns = document.querySelectorAll('.tab-btn');
-        if(tabId === 'split') btns[0].classList.add('active');
-        else if(tabId === 'threshold') btns[1].classList.add('active');
-        else btns[2].classList.add('active');
+        document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
     }
 
     function syncInput(rangeId, numId) { document.getElementById(numId).value = document.getElementById(rangeId).value; }
@@ -649,12 +565,25 @@
         const kInput = document.getElementById('kNum2');
         const kRange = document.getElementById('kRange2');
         const k = parseInt(kInput.value);
-        
-        kRange.max = n > 10 ? 10 : n;
-        if(k > n) {
+        if(isNaN(n)) return; // user is mid-edit; performSplitThreshold() enforces bounds
+
+        kRange.max = Math.min(Math.max(n, 2), 10);
+        if(k > n && n >= 2) {
             kInput.value = n;
-            kRange.value = (n > 10) ? 10 : n;
+            kRange.value = Math.min(n, 10);
         }
+    }
+
+    // Returns {n, k} or null (after alerting). Enforces 2 <= K <= N <= 255:
+    // K=1 would make every share equal the secret; N>255 would wrap share IDs to x=0 (the secret).
+    function readThresholdParams() {
+        const nStr = document.getElementById('nNum2').value.trim();
+        const kStr = document.getElementById('kNum2').value.trim();
+        const n = Number(nStr), k = Number(kStr);
+        if(!/^\d+$/.test(nStr) || n < 2 || n > 255) { alert("Total shares (N) must be a whole number from 2 to 255."); return null; }
+        if(!/^\d+$/.test(kStr) || k < 2) { alert("Required shares (K) must be a whole number of at least 2."); return null; }
+        if(k > n) { alert("Required shares (K) cannot be greater than Total (N)"); return null; }
+        return {n, k};
     }
 
     function detectTheme() { document.getElementById('themeSelect').value = 'auto'; applyTheme('auto'); }
@@ -701,10 +630,7 @@
     }
     
     function generateSecret(targetId) {
-        if(!targetId) {
-            const activeTab = document.querySelector('.tab-content.active').id;
-            targetId = (activeTab === 'split') ? 'secret_1' : 'secret_2';
-        }
+        if(!targetId) targetId = 'secret_2';
         const len = parseInt(document.getElementById('lenRange').value);
         let pool=[], req=[];
         const cfg = [{id:'sym', set:SYMBOLS}, {id:'upper', set:UPPER}, {id:'lower', set:LOWER}, {id:'num', set:NUMBERS}];
@@ -722,37 +648,14 @@
         document.getElementById(targetId).value = pwd.join('');
     }
 
-    /* ACTION: SPLIT XOR */
-    function performSplitXOR() {
-        const secretStr = document.getElementById('secret_1').value;
-        const n = parseInt(document.getElementById('nNum1').value);
-        if(!secretStr) { alert("No secret provided."); return; }
-
-        const enc = new TextEncoder();
-        const secretBytes = enc.encode(secretStr);
-        const len = secretBytes.length;
-        
-        const shares = []; 
-        const finalShare = new Uint8Array(len);
-        finalShare.set(secretBytes);
-
-        for (let i = 0; i < n - 1; i++) {
-            const r = getRandomBytes(len);
-            shares.push(r);
-            for(let j=0; j<len; j++) finalShare[j] ^= r[j];
-        }
-        shares.push(final);
-        renderShares(shares.map(b => bytesToHex(b)), 'sharesOutput1', 'XOR');
-    }
-
     /* ACTION: SPLIT THRESHOLD */
     function performSplitThreshold() {
         const secretStr = document.getElementById('secret_2').value;
-        const n = parseInt(document.getElementById('nNum2').value);
-        const k = parseInt(document.getElementById('kNum2').value);
         if(!secretStr) { alert("No secret"); return; }
-        if(k > n) { alert("Required shares (K) cannot be greater than Total (N)"); return; }
-        
+        const params = readThresholdParams();
+        if(!params) return;
+        const {n, k} = params;
+
         const secretBytes = new TextEncoder().encode(secretStr);
         const shares = [];
         for(let i=0; i<n; i++) shares.push(new Uint8Array(secretBytes.length));
@@ -774,7 +677,7 @@
             withId.set(s, 1);
             return bytesToHex(withId);
         });
-        renderShares(finalShares, 'sharesOutput2', 'THRESHOLD');
+        renderShares(finalShares, 'sharesOutput2', `${k}-OF-${n}`);
     }
 
     function renderShares(hexShares, outputId, type) {
@@ -800,8 +703,10 @@
                     <button class="btn-icon" 
                         onmousedown="reveal('${id}', '${ov}')" 
                         onmouseup="hide('${id}', '${ov}')" 
+                        onmouseleave="hide('${id}', '${ov}')" 
                         ontouchstart="reveal('${id}', '${ov}')" 
-                        ontouchend="hide('${id}', '${ov}')">
+                        ontouchend="hide('${id}', '${ov}')" 
+                        ontouchcancel="hide('${id}', '${ov}')" title="Hold to Reveal">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                     <button class="btn-icon" onclick="copyToClipboard(document.getElementById('${id}').value)">
@@ -823,9 +728,9 @@
             <div class="secure-input-wrapper">
                 <div class="secure-display-overlay" id="ov_${id}"></div>
                 <input type="password" class="recon-input" id="${id}" placeholder="Paste Share Code" 
-                       autocomplete="off" data-lpignore="true" style="font-family:monospace;letter-spacing:1px"
+                       autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false" style="font-family:monospace;letter-spacing:1px"
                        oninput="this.value=this.value.replace(/[^0-9A-Fa-f]/g,'').toUpperCase()">
-                <button class="btn-icon" onmousedown="reveal('${id}','ov_${id}')" onmouseup="hide('${id}','ov_${id}')" ontouchstart="reveal('${id}','ov_${id}')" ontouchend="hide('${id}','ov_${id}')">
+                <button class="btn-icon" onmousedown="reveal('${id}','ov_${id}')" onmouseup="hide('${id}','ov_${id}')" onmouseleave="hide('${id}','ov_${id}')" ontouchstart="reveal('${id}','ov_${id}')" ontouchend="hide('${id}','ov_${id}')" ontouchcancel="hide('${id}','ov_${id}')" title="Hold to Reveal">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </button>
                 <button class="btn-delete" onclick="this.closest('.share-item').remove();updateDeleteButtons()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
@@ -841,55 +746,54 @@
     }
 
     function performReconstruct() {
-        const isThreshold = document.getElementById('useThreshold').checked;
         const inputs = Array.from(document.querySelectorAll('.recon-input')).map(el => el.value).filter(v => v);
+        const resultArea = document.getElementById('resultArea');
+        const resultInput = document.getElementById('reconResult');
+        // Never leave a previous secret on screen after a new attempt
+        resultInput.value = '';
+        resultArea.style.display = 'none';
         
         if(inputs.length < 2) { alert("Need 2+ shares"); return; }
         
         try {
             const rawBytes = inputs.map(hexToBytes);
-            let recovered;
             
-            if(isThreshold) {
-                // SHAMIR RECONSTRUCT
-                const points = rawBytes.map(b => ({x: b[0], y: b.slice(1)}));
-                const len = points[0].y.length;
-                if(!points.every(p => p.y.length === len)) throw new Error("Length mismatch");
-                
-                const secret = new Uint8Array(len);
-                for(let i=0; i<len; i++) {
-                    let sum = 0;
-                    for(let j=0; j<points.length; j++) {
-                        const xj = points[j].x;
-                        const yj = points[j].y[i];
-                        let prod = 1;
-                        for(let m=0; m<points.length; m++) {
-                            if(m===j) continue;
-                            const xm = points[m].x;
-                            const num = xm;
-                            const den = GF256.add(xm, xj);
-                            prod = GF256.mul(prod, GF256.div(num, den));
-                        }
-                        sum = GF256.add(sum, GF256.mul(yj, prod));
+            // SHAMIR RECONSTRUCT (byte 0 = share ID / x-coordinate, rest = y-values)
+            const points = rawBytes.map(b => ({x: b[0], y: b.slice(1)}));
+            const len = points[0].y.length;
+            if(len === 0) throw new Error("Share is too short");
+            if(!points.every(p => p.y.length === len)) throw new Error("Length mismatch");
+            if(points.some(p => p.x === 0)) throw new Error("Invalid share ID (00)");
+            const ids = new Set(points.map(p => p.x));
+            if(ids.size !== points.length) throw new Error("Duplicate share entered (same share ID used twice)");
+            
+            const secret = new Uint8Array(len);
+            for(let i=0; i<len; i++) {
+                let sum = 0;
+                for(let j=0; j<points.length; j++) {
+                    const xj = points[j].x;
+                    const yj = points[j].y[i];
+                    let prod = 1;
+                    for(let m=0; m<points.length; m++) {
+                        if(m===j) continue;
+                        const xm = points[m].x;
+                        const num = xm;
+                        const den = GF256.add(xm, xj);
+                        prod = GF256.mul(prod, GF256.div(num, den));
                     }
-                    secret[i] = sum;
+                    sum = GF256.add(sum, GF256.mul(yj, prod));
                 }
-                recovered = secret;
-            } else {
-                // XOR RECONSTRUCT
-                const len = rawBytes[0].length;
-                if(!rawBytes.every(b => b.length === len)) throw new Error("Length mismatch");
-                recovered = new Uint8Array(len);
-                for(let i=0; i<len; i++) {
-                    let v = 0; 
-                    for(let s=0; s<rawBytes.length; s++) v ^= rawBytes[s][i];
-                    recovered[i] = v;
-                }
+                secret[i] = sum;
             }
             
-            const dec = new TextDecoder("utf-8", {fatal: true});
-            document.getElementById('reconResult').value = dec.decode(recovered);
-            document.getElementById('resultArea').style.display = 'block';
+            let text;
+            try {
+                text = new TextDecoder("utf-8", {fatal: true}).decode(secret);
+            } catch(_) {
+                throw new Error("Result is not valid text. You may have entered fewer than K shares, or a share is mistyped or from a different split.");
+            }
+            resultInput.value = text;
+            resultArea.style.display = 'block';
         } catch(e) {
             alert("Reconstruction failed: " + e.message);
         }
@@ -899,10 +803,11 @@
     function getHighlightedHTML(text) {
         if (!text) return '';
         let html = '';
+        const esc = c => c.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
         for (let char of text) {
             if (/[0-9]/.test(char)) html += `<span class="hl-num">${char}</span>`;
-            else if (SYMBOLS.includes(char)) html += `<span class="hl-sym">${char}</span>`;
-            else html += char;
+            else if (SYMBOLS.includes(char)) html += `<span class="hl-sym">${esc(char)}</span>`;
+            else html += esc(char);
         }
         return html;
     }
@@ -912,7 +817,10 @@
         document.getElementById(ov).style.display = 'flex'; 
     }
     function hide(id, ov) { document.getElementById(ov).style.display = 'none'; }
-    function copyToClipboard(t) { navigator.clipboard.writeText(t); }
+    function copyToClipboard(t) {
+        if (!navigator.clipboard) { alert("Clipboard not available in this browser context. Please copy manually."); return; }
+        navigator.clipboard.writeText(t).catch(() => alert("Copy failed. Please copy manually."));
+    }
 </script>
 
 
