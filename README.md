@@ -1,6 +1,6 @@
 # Secure Password Split
 
-> **A Single-File, Offline-First Progressive Web Application (PWA) for Cryptographic Secret Sharing.**
+> **A Single-File, Offline-First Web Application for Threshold Secret Sharing (Shamir's Secret Sharing).**
 
 ---
 
@@ -19,30 +19,35 @@ While this application can be hosted on a static server (like GitHub Pages), for
 
 ## 📖 Overview
 
-**Secure Password Split** is a client-side utility that allows you to split sensitive secrets (passwords, seed phrases, private keys) into multiple shares using information-theory cryptographic security methods. It operates entirely in the browser with **zero server-side transmission**.
+**Secure Password Split** is a client-side utility that allows you to split sensitive secrets (passwords, seed phrases, private keys) into multiple shares using information-theoretically secure secret sharing. It operates entirely in the browser with **zero server-side transmission**.
 
-It supports two splitting modes:
+It uses a single splitting mode:
 
-* **N-of-N (XOR):** All generated shares are required to reconstruct the secret.
-* **K-of-N (Threshold Cryptography):** Uses Shamir's Secret Sharing (over GF(256)). A subset (K) of the total shares (N) is required to reconstruct the secret.
+* **K-of-N (Threshold):** Shamir's Secret Sharing over GF(256). The secret is split into **N** shares, and any **K** of them (2 ≤ K ≤ N ≤ 255) are sufficient to reconstruct it. Fewer than K shares reveal nothing about the secret's content.
+
+> **Tip:** For an "all shares required" split, set **K = N**.
+
+> ⚠️ **Legacy N-of-N (XOR) shares are no longer supported.** Earlier versions offered a separate XOR "Split" mode. That mode has been removed, and the Reconstruct tab now always uses threshold (Shamir) reconstruction. If you hold XOR shares created by an older version, keep a copy of that older version to reconstruct them.
 
 ---
 
 ## ✨ Features
 
 ### Cryptography
-* **CSPRNG:** Uses `window.crypto.getRandomValues` for all random number generation.
-* **Transport Agnostic:** Shares are encoded in Hexadecimal, making them safe to transport via any medium (paper, email, text) regardless of the secret's original character set.
-* **Sanitized Reconstruction:** Automatically handles case sensitivity and whitespace cleaning during reconstruction.
+* **CSPRNG:** Uses `window.crypto.getRandomValues` for all random number generation (with rejection sampling to avoid modulo bias).
+* **Parameter Enforcement:** Splitting is refused unless `2 ≤ K ≤ N ≤ 255`, preventing degenerate splits (e.g., K = 1, where every share would contain the secret in plain form).
+* **Transport Agnostic:** Shares are encoded in Hexadecimal, making them safe to transport via any medium (paper, email, text) regardless of the secret's original character set (UTF-8 supported).
+* **Sanitized Reconstruction:** Share inputs automatically strip non-hex characters (e.g., whitespace) and normalize case.
+* **Reconstruction Checks:** Detects mismatched share lengths, duplicate shares, invalid share IDs, and results that are not valid text.
 
 ### Application Architecture
-* **Single File Interface (SFI):** The entire app (HTML, CSS, JS, SVG Assets, PWA Manifest, Service Worker) is contained in one `.html` file.
-* **Recursive Quine Download:** The application can download its own source code directly from memory, ensuring the offline copy is an exact replica of the running instance.
-* **PWA Support:** Fully installable on iOS, Android, and Desktop (Chrome/Edge). Includes an embedded Service Worker for offline caching.
+* **Single File Interface (SFI):** The entire app (HTML, CSS, JS, SVG assets, Web App Manifest) is contained in one `.html` file.
+* **Recursive Quine Download:** The application can download its own source code. The copy is a snapshot taken at page load, so it **never includes secrets or shares** entered or generated during the session.
+* **Installable (best-effort):** An embedded Web App Manifest and install guidance are provided for iOS, Android, and Desktop. Offline use is achieved by running the downloaded `SPSS.html` file directly; no offline cache is provided (see *Known Limitations*).
 
 ### UI/UX
-* **Secure Inputs:** `autocomplete="off"` and anti-password-manager attributes (`data-lpignore`) to prevent unauthorized caching.
-* **Visual Hashing:** "Hold to Reveal" functionality with syntax highlighting (**Red** for digits, **Green** for symbols) to aid in manual transcription verification.
+* **Secure Inputs:** `autocomplete="off"` and anti-password-manager attributes (`data-lpignore`, `data-1p-ignore`) to discourage unauthorized caching.
+* **Visual Hashing:** "Hold to Reveal" functionality with syntax highlighting (**Red** for digits, **Green** for symbols) to aid in manual transcription verification. Releasing the button, or moving the pointer away, hides the value again.
 * **Dark/Light Mode:** Auto-detection with manual override.
 * **Generator:** Built-in secure password generator with configurable complexity (Symbols, Case, Numbers).
 
@@ -58,17 +63,30 @@ It supports two splitting modes:
 2.  Open the file in your preferred browser.
 
 ### To Split
-1.  Enter your secret.
-2.  Select **Split** or **Threshold Split**.
-3.  Adjust the sliders/inputs for the number of shares (N) and threshold (K).
-4.  Click **SPLIT**.
-5.  Copy the resulting Hex strings.
+1.  On the **Threshold Split** tab, enter your secret (or generate one).
+2.  Set **Total Shares (N)** and **Required Shares (K)** using the sliders or number inputs.
+3.  Click **SPLIT**.
+4.  Copy the resulting Hex strings. Each share is labelled with its K-of-N parameters. **Record K along with the shares**, as the shares themselves do not state how many are required.
 
 ### To Reconstruct
 1.  Go to the **Reconstruct** tab.
-2.  Paste your Hex shares.
-3.  If using Shamir shares, toggle **"Use Threshold Mode"** to **ON**.
-4.  Click **RECONSTRUCT**.
+2.  Paste **at least K** Hex shares (use **Add Share Row** for more than two). Order does not matter.
+3.  Click **RECONSTRUCT SECRET**.
+
+---
+
+## 🧩 Share Format
+
+Each share is a hex string: the first byte is the share ID (`01`–`FF`, the x-coordinate) and the remaining bytes are the share's y-values, one per byte of the UTF-8 encoded secret.
+
+---
+
+## ⚠️ Known Limitations
+
+* **No integrity check:** Shares carry no checksum or authentication tag. Supplying fewer than K shares, or a mistyped share, usually produces an error, but may occasionally produce incorrect text without warning. Verify the recovered secret before relying on it.
+* **Length is visible:** Share length reveals the byte length of the secret. Pad short secrets if their length is sensitive.
+* **No offline cache:** The app does not use a Service Worker, so the hosted version is not cached for offline use. Use the downloaded file for offline operation.
+* **Clipboard:** Copied shares and secrets remain on the system clipboard (and in any clipboard history) until overwritten. Clear it after use.
 
 ---
 
@@ -84,7 +102,7 @@ It supports two splitting modes:
 
 ## 📄 License
 
-**Author:** Erez Kalman - KSEC
+**Author:** [Erez Kalman - KSEC](https://www.kalman.co.il/)
 
 This project is licensed under a custom **Personal Non-Commercial Use License**:
 
