@@ -1,115 +1,829 @@
-# Secure Password Split
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#121212">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Secure Password Split</title>
+    
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiU2VjdXJlIFBhc3N3b3JkIFNwbGl0Iiwic2hvcnRfbmFtZSI6IlNlY3VyZSBTcGxpdCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMxMjEyMTIiLCJ0aGVtZV9jb2xvciI6IiMxMjEyMTIiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhacFpYZENiM2c5SWpBZ01DQTFNVElnTlRFeUlqNDhjbVZqZENCM2FXUjBhRDBpTlRFeUlpQm9aV2xuYUhROUlqVXhNaUlnY25nOUlqazJJaUJtYVd4c1BTSWpNVEl4TWpFeUlpOCtQSEpsWTNRZ2VEMGlNVE0ySWlCNVBTSXlNeklpSUhkcFpIUm9QU0l5TkRBaUlHaGxhV2RvZEQwaU1UZzBJaUJ5ZUQwaU1qUWlJR1pwYkd3OUlpTXpZamd5WmpZaUx6NDhjR0YwYUNCa1BTSk5NVGMySURJek1uWXROVFpoT0RBZ09EQWdNQ0F3SURFZ01UWXdJREIyTlRZaUlHWnBiR3c5SW01dmJtVWlJSE4wY205clpUMGlJek5pT0RKbU5pSWdjM1J5YjJ0bExYZHBaSFJvUFNJME1DSXZQanhqYVhKamJHVWdZM2c5SWpJMU5pSWdZM2s5SWpNeE1DSWdjajBpTWpZaUlHWnBiR3c5SWlNeE1qRXlNVElpTHo0OGNtVmpkQ0I0UFNJeU5EUWlJSGs5SWpNeE9DSWdkMmxrZEdnOUlqSTBJaUJvWldsbmFIUTlJalUySWlCeWVEMGlPQ0lnWm1sc2JEMGlJekV5TVRJeE1pSXZQand2YzNablBnPT0iLCJzaXplcyI6ImFueSIsInR5cGUiOiJpbWFnZS9zdmcreG1sIiwicHVycG9zZSI6ImFueSJ9XX0=">
 
-> **A Single-File, Offline-First Web Application for Threshold Secret Sharing (Shamir's Secret Sharing).**
+    <style>
+        :root {
+            /* Dark Theme (Default/Base) */
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --surface-highlight: #2c2c2c;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --danger: #ef4444;
+            --digit-color: #ff5555; /* Red */
+            --symbol-color: #50fa7b; /* Green */
+            --border-color: #333;
+            --font-mono: 'Courier New', Courier, monospace;
+            --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            
+            --banner-bg: #fef08a;
+            --banner-text: #b91c1c;
+        }
 
----
+        /* Light Theme Overrides */
+        [data-theme="light"] {
+            --bg-color: #f3f4f6;
+            --surface-color: #ffffff;
+            --surface-highlight: #e5e7eb;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border-color: #d1d5db;
+            --digit-color: #dc2626; /* Darker Red */
+            --symbol-color: #059669; /* Darker Green */
+        }
 
-## 🚨 Security Warning
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            transition: background-color 0.2s, color 0.2s;
+        }
 
-**THIS TOOL IS DESIGNED TO BE RUN LOCALLY AND OFFLINE.**
+        /* SECURITY BANNER */
+        .security-banner {
+            background-color: var(--banner-bg);
+            color: var(--banner-text);
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.4;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .download-link {
+            color: #0000ff; /* Standard Blue */
+            font-weight: 800;
+            text-decoration: underline;
+            cursor: pointer;
+        }
 
-While this application can be hosted on a static server (like GitHub Pages), for **maximum security**, it is highly recommended to:
+        /* HEADER */
+        header {
+            padding: 1rem;
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+        }
+        
+        .header-top {
+            width: 100%; max-width: 700px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
 
-1.  Download the `SPSS.html` file (`index.html` in the repo).
-2.  **Disconnect your device from the internet.**
-3.  Run the file locally in a trusted browser.
-4.  Close the browser window before reconnecting to the network.
+        .header-actions { display: flex; gap: 0.5rem; align-items: center; }
 
----
+        h1 { margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: 1px; color: var(--text-main); text-transform: uppercase; }
+        .license { font-size: 0.65rem; color: var(--text-muted); line-height: 1.2; text-align: center; max-width: 600px; margin-top: 4px; }
 
-## 📖 Overview
+        .btn-install {
+            background: var(--surface-highlight); color: var(--text-main); 
+            border: 1px solid var(--border-color);
+            padding: 0.3rem 0.6rem; font-size: 0.75rem; font-weight: 600;
+            border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px;
+        }
+        .btn-install:hover { background: rgba(255,255,255,0.1); }
 
-**Secure Password Split** is a client-side utility that allows you to split sensitive secrets (passwords, seed phrases, private keys) into multiple shares using information-theoretically secure secret sharing. It operates entirely in the browser with **zero server-side transmission**.
+        .theme-select {
+            background: var(--surface-highlight); color: var(--text-main);
+            border: 1px solid var(--border-color); border-radius: 4px;
+            padding: 0.3rem; font-size: 0.75rem; cursor: pointer;
+        }
 
-It uses a single splitting mode:
+        main { flex: 1; padding: 1rem; max-width: 700px; margin: 0 auto; width: 100%; }
 
-* **K-of-N (Threshold):** Shamir's Secret Sharing over GF(256). The secret is split into **N** shares, and any **K** of them (2 ≤ K ≤ N ≤ 255) are sufficient to reconstruct it. Fewer than K shares reveal nothing about the secret's content.
+        /* TABS */
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); background: var(--surface-color); position: sticky; top: 0; z-index: 10; overflow-x: auto; }
+        .tab-btn {
+            flex: 1; padding: 1rem;
+            background: transparent; border: none;
+            color: var(--text-muted); font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+        }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(59,130,246,0.05); }
+        .tab-content { display: none; padding-top: 1.5rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
 
-> **Tip:** For an "all shares required" split, set **K = N**.
+        /* CONTROLS */
+        .control-group { margin-bottom: 1.5rem; background: var(--surface-color); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); }
+        .label-row { display: flex; align-items: center; gap: 8px; margin-bottom: 0.5rem; }
+        .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+        
+        /* INFO ICON TOOLTIP */
+        .info-wrapper { position: relative; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; width: 16px; height: 16px; margin-top: -1px; }
+        .info-tooltip {
+            position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%);
+            background: var(--surface-highlight); border: 1px solid var(--border-color);
+            padding: 10px; border-radius: 6px; width: 220px;
+            font-size: 0.75rem; color: var(--text-main);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            display: none; z-index: 999;
+            text-transform: none; font-weight: normal; line-height: 1.5;
+            pointer-events: none; text-align: left;
+        }
+        .info-wrapper:hover .info-tooltip { display: block; }
+        .info-tooltip::after {
+            content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px;
+            border-width: 5px; border-style: solid;
+            border-color: var(--border-color) transparent transparent transparent;
+        }
 
-> ⚠️ **Legacy N-of-N (XOR) shares are no longer supported.** Earlier versions offered a separate XOR "Split" mode. That mode has been removed, and the Reconstruct tab now always uses threshold (Shamir) reconstruction. If you hold XOR shares created by an older version, keep a copy of that older version to reconstruct them.
+        /* SECURE INPUT */
+        .secure-input-wrapper {
+            position: relative; display: flex; align-items: stretch;
+            background: var(--bg-color); border-radius: 6px; border: 1px solid var(--border-color);
+            overflow: hidden; transition: border-color 0.2s;
+        }
+        .secure-input-wrapper:focus-within { border-color: var(--accent); }
+        
+        .secure-input-wrapper input {
+            flex: 1; background: transparent; border: none;
+            color: var(--text-main); padding: 1rem;
+            font-family: var(--font-mono); font-size: 1rem;
+            width: 100%; outline: none; z-index: 1;
+        }
+        
+        /* MANUAL NUMBER INPUT */
+        .num-input {
+            width: 60px; padding: 4px; border: 1px solid var(--border-color);
+            background: var(--bg-color); color: var(--text-main);
+            border-radius: 4px; font-family: var(--font-mono); text-align: center;
+            font-size: 0.9rem;
+        }
+        .num-input:focus { border-color: var(--accent); outline: none; }
 
----
+        /* SYNTAX OVERLAY */
+        .secure-display-overlay {
+            position: absolute; top: 0; left: 0; right: 80px; bottom: 0;
+            padding: 1rem; font-family: var(--font-mono); font-size: 1rem;
+            background: var(--bg-color); color: var(--text-main);
+            pointer-events: none; white-space: pre; overflow: hidden;
+            display: none; align-items: center; z-index: 2;
+        }
+        .hl-num { color: var(--digit-color); font-weight: bold; }
+        .hl-sym { color: var(--symbol-color); font-weight: bold; }
 
-## ✨ Features
+        /* BUTTONS */
+        .btn-icon {
+            background: transparent; border: none; color: var(--text-muted);
+            width: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            border-left: 1px solid var(--border-color); z-index: 3;
+        }
+        .btn-icon:active { color: var(--text-main); background: rgba(255,255,255,0.05); }
 
-### Cryptography
-* **CSPRNG:** Uses `window.crypto.getRandomValues` for all random number generation (with rejection sampling to avoid modulo bias).
-* **Parameter Enforcement:** Splitting is refused unless `2 ≤ K ≤ N ≤ 255`, preventing degenerate splits (e.g., K = 1, where every share would contain the secret in plain form).
-* **Transport Agnostic:** Shares are encoded in Hexadecimal, making them safe to transport via any medium (paper, email, text) regardless of the secret's original character set (UTF-8 supported).
-* **Sanitized Reconstruction:** Share inputs automatically strip non-hex characters (e.g., whitespace) and normalize case.
-* **Reconstruction Checks:** Detects mismatched share lengths, duplicate shares, invalid share IDs, and results that are not valid text.
+        .btn-delete {
+            width: 36px; color: var(--danger); border-left: 1px solid var(--border-color); cursor: pointer;
+            background: transparent; border: none; display: flex; align-items: center; justify-content: center;
+        }
+        .btn-delete:disabled { opacity: 0.3; cursor: not-allowed; filter: grayscale(1); }
+        .btn-delete:active { background: rgba(239, 68, 68, 0.1); }
 
-### Application Architecture
-* **Single File Interface (SFI):** The entire app (HTML, CSS, JS, SVG assets, Web App Manifest) is contained in one `.html` file.
-* **Recursive Quine Download:** The application can download its own source code. The copy is a snapshot taken at page load, so it **never includes secrets or shares** entered or generated during the session.
-* **Installable (best-effort):** An embedded Web App Manifest and install guidance are provided for iOS, Android, and Desktop. Offline use is achieved by running the downloaded `SPSS.html` file directly; no offline cache is provided (see *Known Limitations*).
+        .btn {
+            width: 100%; padding: 0.8rem; border: none; border-radius: 6px;
+            font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: background 0.2s;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-secondary { background: var(--surface-highlight); color: var(--text-main); margin-top: 0.5rem; font-size: 0.85rem; text-transform: none; border: 1px solid var(--border-color); }
+        
+        /* ADD BUTTON MATCHING INPUT WIDTH */
+        .btn-add-share {
+            width: calc(100% - 1.5rem); /* Match inner container */
+            height: 44px;
+            color: var(--symbol-color); /* Green */
+            border: 1px solid var(--border-color);
+            background: var(--surface-highlight);
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 1rem auto 0 auto; /* Center in control group */
+            transition: all 0.2s;
+        }
+        .btn-add-share:hover { border-color: var(--symbol-color); background: rgba(80, 250, 123, 0.1); }
+        .btn-add-share:active { transform: scale(0.98); }
 
-### UI/UX
-* **Secure Inputs:** `autocomplete="off"` and anti-password-manager attributes (`data-lpignore`, `data-1p-ignore`) to discourage unauthorized caching.
-* **Visual Hashing:** "Hold to Reveal" functionality with syntax highlighting (**Red** for digits, **Green** for symbols) to aid in manual transcription verification. Releasing the button, or moving the pointer away, hides the value again.
-* **Dark/Light Mode:** Auto-detection with manual override.
-* **Generator:** Built-in secure password generator with configurable complexity (Symbols, Case, Numbers).
+        .btn-sm { padding: 0.5rem; font-size: 0.8rem; width: auto; flex: 1; }
 
----
+        /* ICON BUTTONS */
+        .icon-btn-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-top: 1rem; 
+        }
+        
+        .btn-gear {
+            background: transparent; border: none; cursor: pointer; color: var(--accent); 
+            padding: 4px; transition: 0.2s; display: flex;
+        }
+        .btn-gear:hover { transform: rotate(45deg); filter: brightness(1.2); }
+        .btn-gear svg { width: 24px; height: 24px; } /* Smaller size 24px */
 
-## 🚀 Usage
+        .btn-gen-img {
+            background: transparent; border: none; cursor: pointer; padding: 0;
+            display: block; transition: 0.2s;
+        }
+        .btn-gen-img:hover { transform: scale(1.1); filter: brightness(1.2); }
+        .btn-gen-img:active { transform: scale(0.95); }
+        .btn-gen-img img { display: block; width: 42px; height: 42px; object-fit: contain; }
 
-### Online
-1.  Visit the [hosted URL](https://kaerez.github.io/Secure-Password-Split/).
+        /* SHARES OUTPUT */
+        .shares-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .share-item { background: var(--surface-color); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border-color); }
+        .share-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        
+        input[type=range] { width: 100%; accent-color: var(--accent); margin: 0.5rem 0; }
 
-### Offline (Recommended)
-1.  Click the **HERE** link in the top yellow banner to download the `SPSS.html`.
-2.  Open the file in your preferred browser.
+        /* MODAL */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 1000;
+            display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal {
+            background: var(--surface-color);
+            width: 90%; height: 80%; max-width: 500px;
+            border-radius: 12px; border: 1px solid var(--border-color);
+            display: flex; flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .modal-header { padding: 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 1.25rem; overflow-y: auto; flex: 1; }
+        .modal-footer { padding: 1.25rem; border-top: 1px solid var(--border-color); }
 
-### To Split
-1.  On the **Threshold Split** tab, enter your secret (or generate one).
-2.  Set **Total Shares (N)** and **Required Shares (K)** using the sliders or number inputs.
-3.  Click **SPLIT**.
-4.  Copy the resulting Hex strings. Each share is labelled with its K-of-N parameters. **Record K along with the shares**, as the shares themselves do not state how many are required.
+        /* CLOSE BUTTON (RED X) */
+        .btn-close-modal {
+            color: var(--danger); background: transparent; border: none; cursor: pointer;
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            border-radius: 4px;
+        }
+        .btn-close-modal:hover { background: rgba(239, 68, 68, 0.1); }
 
-### To Reconstruct
-1.  Go to the **Reconstruct** tab.
-2.  Paste **at least K** Hex shares (use **Add Share Row** for more than two). Order does not matter.
-3.  Click **RECONSTRUCT SECRET**.
+        /* CONFIG GRID */
+        .toggle-group { background: var(--bg-color); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 1rem; }
+        .toggle-label { font-size: 0.8rem; color: var(--text-main); margin-bottom: 0.5rem; display: block; font-weight: 600; }
+        .tri-state { display: flex; background: var(--surface-highlight); border-radius: 6px; padding: 4px; gap: 2px; }
+        .tri-option {
+            flex: 1; text-align: center; font-size: 0.85rem; padding: 8px;
+            cursor: pointer; border-radius: 4px; color: var(--text-muted); transition: 0.2s;
+        }
+        .tri-option.selected { background: var(--accent); color: white; font-weight: bold; }
+        .tri-option[data-val="no"].selected { background: #cf3838; }
+        .tri-option[data-val="req"].selected { background: #10b981; }
 
----
+        /* INSTALL LIST */
+        .install-list { list-style: none; padding: 0; margin: 0; }
+        .install-list li { margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+        .step-icon { 
+            background: var(--surface-highlight); width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
+            flex-shrink: 0;
+        }
+        .step-content strong { display: block; margin-bottom: 0.25rem; color: var(--accent); }
+        .step-content p { margin: 0; font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
 
-## 🧩 Share Format
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
 
-Each share is a hex string: the first byte is the share ID (`01`–`FF`, the x-coordinate) and the remaining bytes are the share's y-values, one per byte of the UTF-8 encoded secret.
+<div class="security-banner">
+    🚨 YOU SHOULD RUN THIS LOCALLY, PREFERABLY OFFLINE IN SECURE COMPUTER AND BROWSER. 
+    <a id="downloadLink" href="#" class="download-link">HERE</a> TO DOWNLOAD. 
+    MAKE SURE YOU DOWNLOAD FROM TRUSTED AUTHOR SITE ONLY.
+</div>
 
----
+<header>
+    <div class="header-top">
+        <h1>Secure Password Split</h1>
+        <div class="header-actions">
+            <select class="theme-select" id="themeSelect" onchange="setTheme(this.value)">
+                <option value="auto">Auto</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+            <!-- INSTALL BUTTON -->
+            <button id="btnInstall" class="btn-install" onclick="handleInstallClick()">
+                📲 Install
+            </button>
+        </div>
+    </div>
+    <div class="license">
+        Author: Erez Kalman - KSEC<br>
+        License: Free for personal private non commercial use only.<br>
+        Code can be reused under same terms + open source freely available code + retain commercial ownership to me only.
+    </div>
+</header>
 
-## ⚠️ Known Limitations
+<div class="tabs">
+    <button class="tab-btn active" data-tab="threshold" onclick="switchTab('threshold')">Threshold Split</button>
+    <button class="tab-btn" data-tab="reconstruct" onclick="switchTab('reconstruct')">Reconstruct</button>
+</div>
 
-* **No integrity check:** Shares carry no checksum or authentication tag. Supplying fewer than K shares, or a mistyped share, usually produces an error, but may occasionally produce incorrect text without warning. Verify the recovered secret before relying on it.
-* **Length is visible:** Share length reveals the byte length of the secret. Pad short secrets if their length is sensitive.
-* **No offline cache:** The app does not use a Service Worker, so the hosted version is not cached for offline use. Use the downloaded file for offline operation.
-* **Clipboard:** Copied shares and secrets remain on the system clipboard (and in any clipboard history) until overwritten. Clear it after use.
+<main>
+    <!-- TAB 1: THRESHOLD SPLIT (Shamir) -->
+    <div id="threshold" class="tab-content active">
+        <div class="control-group">
+            <div class="label-row">
+                <span class="label">SECRET TO SPLIT</span>
+                <span id="info-secret-2"><div class="info-wrapper"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="var(--text-muted)"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zm0 12a5.5 5.5 0 110-11 5.5 5.5 0 010 11z"></path><path d="M8.572 6.253H6.607v1h.965v3.812H6.397v1h3.35v-1H8.572V6.253zM8.49 4.032H7.235v1.255H8.49V4.032z"></path></svg><div class="info-tooltip"><span style="color:var(--digit-color)">123</span> = Digits (Red)<br><span style="color:var(--symbol-color)">#$&amp;</span> = Symbols (Green)</div></div></span>
+            </div>
+            <div class="secure-input-wrapper">
+                <div class="secure-display-overlay" id="overlay_s2"></div>
+                <input type="password" id="secret_2" placeholder="Enter Secret or Generate" autocomplete="off" data-lpignore="true" data-1p-ignore="" name="sps_s_2" spellcheck="false">
+                <button class="btn-icon" onmousedown="reveal('secret_2', 'overlay_s2')" onmouseup="hide('secret_2', 'overlay_s2')" onmouseleave="hide('secret_2', 'overlay_s2')" ontouchstart="reveal('secret_2', 'overlay_s2')" ontouchend="hide('secret_2', 'overlay_s2')" ontouchcancel="hide('secret_2', 'overlay_s2')" title="Hold to Reveal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+            </div>
+            <div class="icon-btn-row">
+                <button class="btn-gear" onclick="openModal()" title="Generator Settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </button>
+                <button class="btn-gen-img" onclick="generateSecret('secret_2')" title="Generate New Secret">
+                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTIwMHB0IiBoZWlnaHQ9IjEyMDBwdCIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTIwMCAxMjAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMzYjgyZjYiPgogPHBhdGggZD0ibTEwNzQuNiA0ODkuNzJoLTI3Ny4wOHYtMTAzLjhjMC4xMjEwOS0xMS4xNiAzLjk2MDktMTA3LjQgMTA3LjE2LTEwNy40IDEwMy4yIDAgMTA3LjA0IDk2LjIzOCAxMDcuMTYgMTA3LjI4djM0LjgwMWg1My41MnYtMzQuODAxYzAtNTUuNjgtMzMuNjAyLTE2MC44LTE2MC42OC0xNjAuOC0xMjcuMDggMC0xNjAuNjggMTA1LjEyLTE2MC42OCAxNjAuOHYxMDMuOTJoLTIuMTYwMmMtMzYuMTIxIDAtNjUuMzk4IDMwLjEyMS02NS4zOTggNjcuMTk5djguNTE5NWgtNDg3LjY4Yy02NC41NTkgMC0xMTcuMjQgNTIuNTU5LTExNy4yNCAxMTcuMTIgMCA2NC44MDEgNTIuNjggMTE3LjI0IDExNy4yNCAxMTcuMjRoNDg3LjY4djEwLjgwMWMwIDM3LjA3OCAyOS4yODEgNjcuMTk5IDY1LjM5OCA2Ny4xOTloMzMyLjc2YzM2LjEyMSAwIDY1LjM5OC0zMC4xMjEgNjUuMzk4LTY3LjE5OXYtMjUzLjY4YzAtMzcuMDgyLTI5LjI4MS02Ny4yMDMtNjUuMzk4LTY3LjIwM3ptLTQwMi44NCAyNzEuMDhoLTQ4M2MtNDMuMDc4IDAtNzguMTIxLTM1LjAzOS03OC4xMjEtNzguMjM4IDAtNDIuOTYxIDM1LjAzOS03OC4xMjEgNzguMTIxLTc4LjEyMWg0ODN6bTI3NC42OCAwaC05MC4yMzhsMjMuMzk4LTcxLjg3OWMtMTQuMDM5LTcuNjc5Ny0yMy4zOTgtMjIuNTU5LTIzLjM5OC0zOS42MDIgMC0yNC44NCAyMC4xNi00NSA0NS4xMjEtNDUgMjQuODQgMCA0NS4xMjEgMjAuMTYgNDUuMTIxIDQ1IDAgMTcuMDM5LTkuNDgwNSAzMS45MjItMjMuMzk4IDM5LjYwMnoiLz4KIDxwYXRoIGQ9Im0yNDcuMzIgNjgyLjQ4IDQzLjgwMSAzMy44MjgtMTQuMDQzIDE4LjIzOC0zNi45NTctMjguNTQ3djM3LjE5OWgtMjMuMTZ2LTM3LjE5OWwtMzYuODQgMjguNTQ3LTE0LjE2LTE4LjIzOCA0My44MDEtMzMuODI4LTQzLjgwMS0zMy44NCAxNC4wMzktMTguMjQyIDM2Ljk2MSAyOC41NjJ2LTM3LjE5OWgyMy4xNnYzNy4xOTlsMzYuOTU3LTI4LjU2MiAxNC4wNDMgMTguMjQyeiIvPgogPHBhdGggZD0ibTQyNC4zMiA2ODIuNDggNDMuODAxIDMzLjgyOC0xNC4wNDMgMTguMjM4LTM2Ljk1Ny0yOC41NDd2MzcuMTk5aC0yMy4xNnYtMzcuMTk5bC0zNi44NCAyOC41NDctMTQuMTYtMTguMjM4IDQzLjgwMS0zMy44MjgtNDMuODAxLTMzLjg0IDE0LjAzOS0xOC4yNDIgMzYuOTYxIDI4LjU2MnYtMzcuMTk5aDIzLjE2djM3LjE5OWwzNi45NTctMjguNTYyIDE0LjA0MyAxOC4yNDJ6Ii8+CiA8cGF0aCBkPSJtNjAxLjMyIDY4Mi40OCA0My44MDEgMzMuODI4LTE0LjA0MyAxOC4yMzgtMzYuOTU3LTI4LjU0N3YzNy4xOTloLTIzLjE2di0zNy4xOTlsLTM2Ljg0IDI4LjU0Ny0xNC4xNi0xOC4yMzggNDMuODAxLTMzLjgyOC00My44MDEtMzMuODQgMTQuMDM5LTE4LjI0MiAzNi45NjEgMjguNTYydi0zNy4xOTloMjMuMTZ2MzcuMTk5bDM2Ljk1Ny0yOC41NjIgMTQuMDQzIDE4LjI0MnoiLz4KPC9zdmc+" alt="Generate">
+                </button>
+            </div>
+        </div>
 
----
+        <div class="control-group">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="label">TOTAL SHARES (N)</span>
+                <input type="number" id="nNum2" class="num-input" value="3" min="2" max="255" oninput="syncSlider('nNum2', 'nRange2'); validateThreshold();">
+            </div>
+            <input type="range" id="nRange2" min="2" max="10" value="3" oninput="syncInput('nRange2', 'nNum2'); validateThreshold();">
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem;">
+                <span class="label">REQUIRED SHARES (K)</span>
+                <input type="number" id="kNum2" class="num-input" value="2" min="2" max="255" oninput="syncSlider('kNum2', 'kRange2'); validateThreshold();">
+            </div>
+            <input type="range" id="kRange2" min="2" max="3" value="2" oninput="syncInput('kRange2', 'kNum2'); validateThreshold();">
+            
+            <button class="btn btn-primary" style="margin-top: 1rem;" onclick="performSplitThreshold()">SPLIT</button>
+        </div>
 
-## ⚖️ Liability Disclaimer
+        <div id="sharesOutput2" class="shares-list"></div>
+    </div>
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
->
-> IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
->
-> **YOU USE THIS APPLICATION AT YOUR OWN RISK.** The author accepts no responsibility for lost data, lost passwords, or security breaches resulting from the use or misuse of this software. It is the user's responsibility to ensure the security of the environment in which this tool is executed.
+    <!-- TAB 2: RECONSTRUCT -->
+    <div id="reconstruct" class="tab-content">
+        <div class="control-group">
+            <div class="label-row">
+                <span class="label">ENTER SHARES TO RECONSTRUCT</span>
+                <span id="info-recon-header"><div class="info-wrapper"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="var(--text-muted)"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zm0 12a5.5 5.5 0 110-11 5.5 5.5 0 010 11z"></path><path d="M8.572 6.253H6.607v1h.965v3.812H6.397v1h3.35v-1H8.572V6.253zM8.49 4.032H7.235v1.255H8.49V4.032z"></path></svg><div class="info-tooltip"><span style="color:var(--digit-color)">123</span> = Digits (Red)<br><span style="color:var(--symbol-color)">#$&amp;</span> = Symbols (Green)</div></div></span>
+            </div>
+            
+            <div id="reconInputs" class="shares-list" style="margin-top: 0.5rem;"></div>
+            <button class="btn btn-add-share" onclick="addReconRow()" title="Add Share Row">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span style="margin-left:8px;">Add Share Row</span>
+            </button>
+        </div>
 
----
+        <button class="btn btn-primary" onclick="performReconstruct()">RECONSTRUCT SECRET</button>
 
-## 📄 License
+        <div class="control-group" style="margin-top: 1.5rem; display: none; border-color: var(--accent);" id="resultArea">
+            <div class="label-row">
+                <span class="label" style="color: var(--accent);">RECOVERED SECRET</span>
+                <span id="info-result"><div class="info-wrapper"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="var(--text-muted)"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zm0 12a5.5 5.5 0 110-11 5.5 5.5 0 010 11z"></path><path d="M8.572 6.253H6.607v1h.965v3.812H6.397v1h3.35v-1H8.572V6.253zM8.49 4.032H7.235v1.255H8.49V4.032z"></path></svg><div class="info-tooltip"><span style="color:var(--digit-color)">123</span> = Digits (Red)<br><span style="color:var(--symbol-color)">#$&amp;</span> = Symbols (Green)</div></div></span>
+            </div>
+            <div class="secure-input-wrapper">
+                <div class="secure-display-overlay" id="reconOverlay"></div>
+                <input type="password" id="reconResult" readonly="" autocomplete="off" data-lpignore="true" name="sps_r_1">
+                <button class="btn-icon" onmousedown="reveal('reconResult', 'reconOverlay')" onmouseup="hide('reconResult', 'reconOverlay')" onmouseleave="hide('reconResult', 'reconOverlay')" ontouchstart="reveal('reconResult', 'reconOverlay')" ontouchend="hide('reconResult', 'reconOverlay')" ontouchcancel="hide('reconResult', 'reconOverlay')" title="Hold to Reveal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+                <button class="btn-icon" onclick="copyToClipboard(document.getElementById('reconResult').value)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
 
-**Author:** Erez Kalman - KSEC
+<!-- SETTINGS MODAL -->
+<div id="settingsModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <span style="font-weight: 700; font-size: 1.1rem;">Generator Config</span>
+            <button class="btn-close-modal" onclick="closeModal(null)" title="Close">
+                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom: 2rem;">
+                <span class="label">GENERATOR LENGTH: <span id="lenValDisplay" style="color:var(--accent); font-size:1.1rem;">20</span></span>
+                <input type="range" id="lenRange" min="4" max="64" value="20" oninput="document.getElementById('lenValDisplay').innerText = this.value">
+            </div>
+            <div class="config-container">
+                <div class="toggle-group">
+                    <span class="toggle-label">Symbols <span style="font-weight:400; color:var(--text-muted)">(-/:;()$&amp;@.,?![]{}#%^*+=_\|~&lt;&gt;)</span></span>
+                    <div class="tri-state" id="opt-sym"><div class="tri-option" onclick="setOpt('sym', 'no')" data-val="no">No</div><div class="tri-option" onclick="setOpt('sym', 'opt')" data-val="opt">Optional</div><div class="tri-option selected" onclick="setOpt('sym', 'req')" data-val="req">Required</div></div>
+                </div>
+                <div class="toggle-group">
+                    <span class="toggle-label">Uppercase (A-Z)</span>
+                    <div class="tri-state" id="opt-upper"><div class="tri-option" onclick="setOpt('upper', 'no')" data-val="no">No</div><div class="tri-option" onclick="setOpt('upper', 'opt')" data-val="opt">Optional</div><div class="tri-option selected" onclick="setOpt('upper', 'req')" data-val="req">Required</div></div>
+                </div>
+                <div class="toggle-group">
+                    <span class="toggle-label">Lowercase (a-z)</span>
+                    <div class="tri-state" id="opt-lower"><div class="tri-option" onclick="setOpt('lower', 'no')" data-val="no">No</div><div class="tri-option" onclick="setOpt('lower', 'opt')" data-val="opt">Optional</div><div class="tri-option selected" onclick="setOpt('lower', 'req')" data-val="req">Required</div></div>
+                </div>
+                <div class="toggle-group">
+                    <span class="toggle-label">Numbers (0-9)</span>
+                    <div class="tri-state" id="opt-num"><div class="tri-option" onclick="setOpt('num', 'no')" data-val="no">No</div><div class="tri-option" onclick="setOpt('num', 'opt')" data-val="opt">Optional</div><div class="tri-option selected" onclick="setOpt('num', 'req')" data-val="req">Required</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn btn-primary" onclick="saveAndGenerate()">Close &amp; Apply</button></div>
+    </div>
+</div>
 
-This project is licensed under a custom **Personal Non-Commercial Use License**:
+<!-- INSTALL MODAL -->
+<div id="installModal" class="modal-overlay" onclick="closeInstallModal(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <span style="font-weight: 700; font-size: 1.1rem;">How to Install App</span>
+            <button class="btn-close-modal" onclick="closeInstallModal(null)" title="Close">
+                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <ul class="install-list">
+                <li><div class="step-icon"></div><div class="step-content"><strong>iOS</strong><p>Share &gt; Add to Home Screen</p></div></li>
+                <li><div class="step-icon">🤖</div><div class="step-content"><strong>Android</strong><p>Menu &gt; Install App</p></div></li>
+                <li><div class="step-icon">💻</div><div class="step-content"><strong>Desktop</strong><p>Install icon in address bar</p></div></li>
+            </ul>
+        </div>
+        <div class="modal-footer"><button class="btn btn-primary" onclick="closeInstallModal(null)">Got it</button></div>
+    </div>
+</div>
 
-* Free for personal, private, non-commercial use only.
-* Code can be reused under these same terms, provided that:
-    1.  The software remains open source and freely available.
-    2.  Commercial ownership and rights are retained exclusively by the author (Erez Kalman - KSEC).
-    3.  Any commercial use, redistribution for profit, or inclusion in proprietary commercial software is strictly prohibited without prior written consent from the author.
+<script>
+    /* CONSTANTS */
+    const SYMBOLS = "-/:;()$&@.,?![]{}#%^*+=_\\|~<>".split('');
+    const UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+    const LOWER = "abcdefghijklmnopqrstuvwxyz".split('');
+    const NUMBERS = "0123456789".split('');
+    const INFO_ICON_SVG = `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false" fill="var(--text-muted)"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zm0 12a5.5 5.5 0 110-11 5.5 5.5 0 010 11z"></path><path d="M8.572 6.253H6.607v1h.965v3.812H6.397v1h3.35v-1H8.572V6.253zM8.49 4.032H7.235v1.255H8.49V4.032z"></path></svg>`;
+    const INFO_HTML = `<div class="info-wrapper">${INFO_ICON_SVG}<div class="info-tooltip"><span style="color:var(--digit-color)">123</span> = Digits (Red)<br><span style="color:var(--symbol-color)">#$&</span> = Symbols (Green)</div></div>`;
 
-*Built with ❤️ and Paranoia.*
+    /* STATE */
+    let genOptions = { sym: 'req', upper: 'req', lower: 'req', num: 'req' };
+    let deferredPrompt;
+    let pristineHTML = '';
+
+    /* INIT */
+    document.addEventListener('DOMContentLoaded', () => {
+        // Snapshot the source before any DOM mutation, so the download never contains shares/state
+        pristineHTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+        ['info-secret-2', 'info-recon-header', 'info-result'].forEach(id => {
+            if(document.getElementById(id)) document.getElementById(id).innerHTML = INFO_HTML;
+        });
+        detectTheme();
+        const reconContainer = document.getElementById('reconInputs');
+        if(reconContainer.children.length === 0) {
+            addReconRow(); addReconRow();
+        }
+
+        // Recursive Download Logic
+        document.getElementById('downloadLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = URL.createObjectURL(new Blob([pristineHTML], {type: 'text/html'}));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'SPSS.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        });
+    });
+
+    // PWA Install Prompt Handler
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const installBtn = document.getElementById('btnInstall');
+        installBtn.innerHTML = "📲 Install App"; // Update text to indicate native install available
+        installBtn.style.borderColor = "var(--accent)"; // Highlight it
+    });
+
+    function handleInstallClick() {
+        if (deferredPrompt) {
+            // Show native prompt
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                }
+                deferredPrompt = null;
+            });
+        } else {
+            // Fallback to guidance modal
+            openInstallModal();
+        }
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if(document.getElementById('themeSelect').value === 'auto') applyTheme('auto');
+    });
+
+    /* UI HELPERS */
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+    }
+
+    function syncInput(rangeId, numId) { document.getElementById(numId).value = document.getElementById(rangeId).value; }
+    function syncSlider(numId, rangeId) { document.getElementById(rangeId).value = document.getElementById(numId).value; }
+    
+    function validateThreshold() {
+        const n = parseInt(document.getElementById('nNum2').value);
+        const kInput = document.getElementById('kNum2');
+        const kRange = document.getElementById('kRange2');
+        const k = parseInt(kInput.value);
+        if(isNaN(n)) return; // user is mid-edit; performSplitThreshold() enforces bounds
+
+        kRange.max = Math.min(Math.max(n, 2), 10);
+        if(k > n && n >= 2) {
+            kInput.value = n;
+            kRange.value = Math.min(n, 10);
+        }
+    }
+
+    // Returns {n, k} or null (after alerting). Enforces 2 <= K <= N <= 255:
+    // K=1 would make every share equal the secret; N>255 would wrap share IDs to x=0 (the secret).
+    function readThresholdParams() {
+        const nStr = document.getElementById('nNum2').value.trim();
+        const kStr = document.getElementById('kNum2').value.trim();
+        const n = Number(nStr), k = Number(kStr);
+        if(!/^\d+$/.test(nStr) || n < 2 || n > 255) { alert("Total shares (N) must be a whole number from 2 to 255."); return null; }
+        if(!/^\d+$/.test(kStr) || k < 2) { alert("Required shares (K) must be a whole number of at least 2."); return null; }
+        if(k > n) { alert("Required shares (K) cannot be greater than Total (N)"); return null; }
+        return {n, k};
+    }
+
+    function detectTheme() { document.getElementById('themeSelect').value = 'auto'; applyTheme('auto'); }
+    function setTheme(val) { applyTheme(val); }
+    function applyTheme(val) {
+        const isDark = val === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : (val === 'dark');
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
+
+    function openModal() { document.getElementById('settingsModal').style.display = 'flex'; }
+    function closeModal(e) { if (!e || e.target.id === 'settingsModal' || e.target.closest('.btn-close-modal')) document.getElementById('settingsModal').style.display = 'none'; }
+    function saveAndGenerate() { document.getElementById('settingsModal').style.display = 'none'; }
+    function openInstallModal() { document.getElementById('installModal').style.display = 'flex'; }
+    function closeInstallModal(e) { if (!e || e.target.id === 'installModal' || e.target.closest('.btn-close-modal') || e.target.tagName === 'BUTTON') document.getElementById('installModal').style.display = 'none'; }
+
+    function setOpt(group, val) {
+        genOptions[group] = val;
+        const container = document.getElementById(`opt-${group}`);
+        container.querySelectorAll('.tri-option').forEach(el => {
+            el.classList.remove('selected');
+            if (el.dataset.val === val) el.classList.add('selected');
+        });
+    }
+
+    /* GF(256) */
+    const GF256={EXP:new Uint8Array(512),LOG:new Uint8Array(256),init:function(){let x=1;for(let i=0;i<255;i++){this.EXP[i]=x;this.EXP[i+255]=x;this.LOG[x]=i;x<<=1;if(x&256)x^=0x11D}},add:(a,b)=>a^b,sub:(a,b)=>a^b,mul:function(a,b){if(a===0||b===0)return 0;return this.EXP[this.LOG[a]+this.LOG[b]]},div:function(a,b){if(a===0)return 0;if(b===0)throw new Error("Div by 0");return this.EXP[(this.LOG[a]+255-this.LOG[b])%255]}};GF256.init();
+
+    /* CRYPTO */
+    function getRandInt(max) {
+        if(max<=1) return 0;
+        const limit = Math.floor(256/max)*max;
+        const arr = new Uint8Array(1);
+        let r; do { window.crypto.getRandomValues(arr); r=arr[0]; } while(r>=limit);
+        return r % max;
+    }
+    function getRandomBytes(len) { const a=new Uint8Array(len); window.crypto.getRandomValues(a); return a; }
+    function bytesToHex(b) { return Array.from(b).map(x => x.toString(16).padStart(2,'0').toUpperCase()).join(''); }
+    function hexToBytes(h) {
+        const c = h.replace(/[^0-9A-Fa-f]/g, '');
+        if(c.length%2!==0) throw new Error("Invalid hex");
+        const b = new Uint8Array(c.length/2);
+        for(let i=0; i<c.length; i+=2) b[i/2] = parseInt(c.substr(i,2), 16);
+        return b;
+    }
+    
+    function generateSecret(targetId) {
+        if(!targetId) targetId = 'secret_2';
+        const len = parseInt(document.getElementById('lenRange').value);
+        let pool=[], req=[];
+        const cfg = [{id:'sym', set:SYMBOLS}, {id:'upper', set:UPPER}, {id:'lower', set:LOWER}, {id:'num', set:NUMBERS}];
+        cfg.forEach(c => {
+            if(genOptions[c.id] !== 'no') {
+                pool = pool.concat(c.set);
+                if(genOptions[c.id] === 'req') req.push(c.set[getRandInt(c.set.length)]);
+            }
+        });
+        if(pool.length===0) { alert("Config empty"); return; }
+        let pwd = [...req];
+        while(pwd.length<len) pwd.push(pool[getRandInt(pool.length)]);
+        if(pwd.length>len) pwd = pwd.slice(0, len);
+        for(let i=pwd.length-1; i>0; i--) { const j=getRandInt(i+1); [pwd[i], pwd[j]]=[pwd[j], pwd[i]]; }
+        document.getElementById(targetId).value = pwd.join('');
+    }
+
+    /* ACTION: SPLIT THRESHOLD */
+    function performSplitThreshold() {
+        const secretStr = document.getElementById('secret_2').value;
+        if(!secretStr) { alert("No secret"); return; }
+        const params = readThresholdParams();
+        if(!params) return;
+        const {n, k} = params;
+
+        const secretBytes = new TextEncoder().encode(secretStr);
+        const shares = [];
+        for(let i=0; i<n; i++) shares.push(new Uint8Array(secretBytes.length));
+        
+        for(let b=0; b<secretBytes.length; b++) {
+            const s = secretBytes[b];
+            const coeffs = [s];
+            for(let c=1; c<k; c++) coeffs.push(getRandInt(256));
+            for(let x=1; x<=n; x++) {
+                let y = 0;
+                for(let c=k-1; c>=0; c--) y = GF256.add(GF256.mul(y, x), coeffs[c]);
+                shares[x-1][b] = y;
+            }
+        }
+        
+        const finalShares = shares.map((s, i) => {
+            const withId = new Uint8Array(s.length + 1);
+            withId[0] = i + 1;
+            withId.set(s, 1);
+            return bytesToHex(withId);
+        });
+        renderShares(finalShares, 'sharesOutput2', `${k}-OF-${n}`);
+    }
+
+    function renderShares(hexShares, outputId, type) {
+        const container = document.getElementById(outputId);
+        container.innerHTML = '';
+        hexShares.forEach((share, i) => {
+            const id = `${outputId}_${i}`;
+            const ov = `ov_${id}`;
+            const div = document.createElement('div');
+            div.className = 'share-item';
+            div.innerHTML = `
+                <div class="share-header">
+                    <div style="display:flex; align-items:center;">
+                        <span class="label" style="margin-bottom:0; margin-right:4px;">SHARE ${i+1} (${type})</span>
+                        ${INFO_HTML}
+                    </div>
+                </div>
+                <div class="secure-input-wrapper">
+                    <div class="secure-display-overlay" id="${ov}"></div>
+                    <input type="password" id="${id}" value="${share}" readonly 
+                           autocomplete="off" data-lpignore="true" data-1p-ignore name="sps_out_${i}" spellcheck="false"
+                           style="font-family: monospace; letter-spacing: 1px;">
+                    <button class="btn-icon" 
+                        onmousedown="reveal('${id}', '${ov}')" 
+                        onmouseup="hide('${id}', '${ov}')" 
+                        onmouseleave="hide('${id}', '${ov}')" 
+                        ontouchstart="reveal('${id}', '${ov}')" 
+                        ontouchend="hide('${id}', '${ov}')" 
+                        ontouchcancel="hide('${id}', '${ov}')" title="Hold to Reveal">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                    <button class="btn-icon" onclick="copyToClipboard(document.getElementById('${id}').value)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    /* RECONSTRUCT LOGIC */
+    function addReconRow() {
+        const container = document.getElementById('reconInputs');
+        const id = 'rc_' + Math.random().toString(36).substr(2,9);
+        const div = document.createElement('div');
+        div.className = 'share-item';
+        div.innerHTML = `
+            <div class="secure-input-wrapper">
+                <div class="secure-display-overlay" id="ov_${id}"></div>
+                <input type="password" class="recon-input" id="${id}" placeholder="Paste Share Code" 
+                       autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false" style="font-family:monospace;letter-spacing:1px"
+                       oninput="this.value=this.value.replace(/[^0-9A-Fa-f]/g,'').toUpperCase()">
+                <button class="btn-icon" onmousedown="reveal('${id}','ov_${id}')" onmouseup="hide('${id}','ov_${id}')" onmouseleave="hide('${id}','ov_${id}')" ontouchstart="reveal('${id}','ov_${id}')" ontouchend="hide('${id}','ov_${id}')" ontouchcancel="hide('${id}','ov_${id}')" title="Hold to Reveal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+                <button class="btn-delete" onclick="this.closest('.share-item').remove();updateDeleteButtons()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>`;
+        container.appendChild(div);
+        updateDeleteButtons();
+    }
+    
+    function updateDeleteButtons() {
+        const btns = document.querySelectorAll('.btn-delete');
+        const disabled = document.getElementById('reconInputs').children.length <= 2;
+        btns.forEach(b => b.disabled = disabled);
+    }
+
+    function performReconstruct() {
+        const inputs = Array.from(document.querySelectorAll('.recon-input')).map(el => el.value).filter(v => v);
+        const resultArea = document.getElementById('resultArea');
+        const resultInput = document.getElementById('reconResult');
+        // Never leave a previous secret on screen after a new attempt
+        resultInput.value = '';
+        resultArea.style.display = 'none';
+        
+        if(inputs.length < 2) { alert("Need 2+ shares"); return; }
+        
+        try {
+            const rawBytes = inputs.map(hexToBytes);
+            
+            // SHAMIR RECONSTRUCT (byte 0 = share ID / x-coordinate, rest = y-values)
+            const points = rawBytes.map(b => ({x: b[0], y: b.slice(1)}));
+            const len = points[0].y.length;
+            if(len === 0) throw new Error("Share is too short");
+            if(!points.every(p => p.y.length === len)) throw new Error("Length mismatch");
+            if(points.some(p => p.x === 0)) throw new Error("Invalid share ID (00)");
+            const ids = new Set(points.map(p => p.x));
+            if(ids.size !== points.length) throw new Error("Duplicate share entered (same share ID used twice)");
+            
+            const secret = new Uint8Array(len);
+            for(let i=0; i<len; i++) {
+                let sum = 0;
+                for(let j=0; j<points.length; j++) {
+                    const xj = points[j].x;
+                    const yj = points[j].y[i];
+                    let prod = 1;
+                    for(let m=0; m<points.length; m++) {
+                        if(m===j) continue;
+                        const xm = points[m].x;
+                        const num = xm;
+                        const den = GF256.add(xm, xj);
+                        prod = GF256.mul(prod, GF256.div(num, den));
+                    }
+                    sum = GF256.add(sum, GF256.mul(yj, prod));
+                }
+                secret[i] = sum;
+            }
+            
+            let text;
+            try {
+                text = new TextDecoder("utf-8", {fatal: true}).decode(secret);
+            } catch(_) {
+                throw new Error("Result is not valid text. You may have entered fewer than K shares, or a share is mistyped or from a different split.");
+            }
+            resultInput.value = text;
+            resultArea.style.display = 'block';
+        } catch(e) {
+            alert("Reconstruction failed: " + e.message);
+        }
+    }
+
+    // VISUAL HELPERS
+    function getHighlightedHTML(text) {
+        if (!text) return '';
+        let html = '';
+        const esc = c => c.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+        for (let char of text) {
+            if (/[0-9]/.test(char)) html += `<span class="hl-num">${char}</span>`;
+            else if (SYMBOLS.includes(char)) html += `<span class="hl-sym">${esc(char)}</span>`;
+            else html += esc(char);
+        }
+        return html;
+    }
+    function reveal(id, ov) { 
+        const el = document.getElementById(id); 
+        document.getElementById(ov).innerHTML = getHighlightedHTML(el.value); 
+        document.getElementById(ov).style.display = 'flex'; 
+    }
+    function hide(id, ov) { document.getElementById(ov).style.display = 'none'; }
+    function copyToClipboard(t) {
+        if (!navigator.clipboard) { alert("Clipboard not available in this browser context. Please copy manually."); return; }
+        navigator.clipboard.writeText(t).catch(() => alert("Copy failed. Please copy manually."));
+    }
+</script>
+
+
+
+
+</body></html>
